@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  apigateway:
+    image: traefik:v2.2.1
+    ports:
+      - "5080:80" # Port of the API Gateway, which will be the port behind which the system will be published
+      - "5088:8080" # Dashboard of Traefik for troubleshooting
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - meteor-network
+
+  schemes:
+    image: ${DOCKER_REGISTRY-}schemes
+    build:
+      context: .
+      dockerfile: Schemes/Dockerfile
+    networks:
+      - meteor-network
+
+volumes: # The volumes will store the database data; kept even after the containers are deleted
+  meteor-sql-data:
+    driver: local
+  meteor-mongo-data:
+    driver: local
+
+networks:
+  meteor-network:
+    driver: bridge
