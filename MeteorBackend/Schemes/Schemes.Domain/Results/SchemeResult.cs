@@ -29,6 +29,7 @@ namespace Schemes.Domain.Results
 
         public int Version { get; set; }
 
+        [JsonPropertyName("date_time")]
         public DateTime DateTime { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

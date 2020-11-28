@@ -6,10 +6,6 @@ namespace Schemes.Dal
 {
     internal static class Converters
     {
-        //public static Scheme ToDomain(this SchemeResult value)
-        //    => new SchemeResult(value);
-
-
         public static SchemeResult ParseScheme(DbDataReader reader) {
             return new SchemeResult(
                 Convert.ToInt32(reader["scheme_id"]),
