@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E43B102A-A00
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Upload", "Upload", "{DEF087AD-52C3-40FA-B448-F2270677EFA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schemes.Domain", "Schemes\Schemes.Domain\Schemes.Domain.csproj", "{43A80B42-33E2-4AAC-9DED-A99A23621349}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{47034E7D-6982-4C19-8B9C-5D91B478DED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47034E7D-6982-4C19-8B9C-5D91B478DED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47034E7D-6982-4C19-8B9C-5D91B478DED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43A80B42-33E2-4AAC-9DED-A99A23621349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43A80B42-33E2-4AAC-9DED-A99A23621349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43A80B42-33E2-4AAC-9DED-A99A23621349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43A80B42-33E2-4AAC-9DED-A99A23621349}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{89434C95-35A4-4750-8399-3F29B327FB86} = {2281BC8F-7CB8-4ACD-AD28-C00EFFDF0C4C}
 		{47034E7D-6982-4C19-8B9C-5D91B478DED3} = {2281BC8F-7CB8-4ACD-AD28-C00EFFDF0C4C}
+		{43A80B42-33E2-4AAC-9DED-A99A23621349} = {2281BC8F-7CB8-4ACD-AD28-C00EFFDF0C4C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72203250-9C36-4E97-B588-281AA11219D2}

@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Schemes.Dal.Data;
+using Schemes.Domain.Requests;
+using Schemes.Domain.Results;
 
 namespace Schemes.Dal
 {
     public interface ISchemesRepository
     {
-        Task<Scheme> Insert(Scheme scheme);
-        Task<List<Scheme>> GetAll();
-        Task<bool> Delete(int id);
-        Task<Scheme> Update(int id, Scheme scheme);
+        Task<SchemeResult> Insert(UpdateSchemeRequest scheme);
+        Task<List<SchemeResult>> GetLatest(int limit = 6);
+        Task<bool> DeleteSingle(int id);
+        Task<SchemeResult> Update(int id, UpdateSchemeRequest scheme);
         Task DeleteAll();
-        Task<Scheme> Get(int id);
+        Task<SchemeResult> GetSingle(int id);
     }
 }
