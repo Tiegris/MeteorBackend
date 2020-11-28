@@ -1,15 +1,12 @@
 version: '3.4'
 
 services:
-
-
   schemes:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80 #; https://+:443
     ports:
-      - "6080:80"
-      - "6443:443"
+      - 8090:80
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

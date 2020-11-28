@@ -39,7 +39,7 @@ namespace Schemes.Controllers
             if (result != null) {
                 return result;
             } else {
-                return StatusCode(404);
+                return NotFound();
             }
         }
 
@@ -63,7 +63,10 @@ namespace Schemes.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<Scheme>> Post([FromBody] Scheme scheme) {
             var result = await repository.Insert(scheme);
-            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
+            if (result == null)
+                return StatusCode(400);
+            else
+                return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]

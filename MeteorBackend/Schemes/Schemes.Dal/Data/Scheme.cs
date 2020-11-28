@@ -29,5 +29,15 @@ namespace Schemes.Dal.Data
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Swarm6 { get; set; }
 
+        public Scheme Normalize() {
+            if (Swarm1 == "") Swarm1 = null;
+            if (Swarm2 == "") Swarm2 = null;
+            if (Swarm3 == "") Swarm3 = null;
+            if (Swarm4 == "") Swarm4 = null;
+            if (Swarm5 == "") Swarm5 = null;
+            if (Swarm6 == "") Swarm6 = null;
+            return this;
+        }
+
     }
 }

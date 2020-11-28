@@ -10,7 +10,7 @@ services:
       - "--api.insecure=true"
       - "--api.dashboard=true"
       - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.exposedbydefault=true"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
@@ -19,12 +19,34 @@ services:
   schemes:
     image: ${DOCKER_REGISTRY-}schemes
     build:
-      context: .
-      dockerfile: Schemes/Dockerfile
+      context: ..
+      dockerfile: Schemes/Schemes.Api/Dockerfile
     networks:
       - meteor-network
 
-volumes: # The volumes will store the database data; kept even after the containers are deleted
+  mysql:
+    image: mysql:8.0.22
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: alma
+    networks:
+      - meteor-network
+    volumes:
+      - meteor-sql-data:/var/lib/mysql
+
+  mongodb:
+    image: mongo:4.2.8
+    networks:
+      - meteor-network
+    volumes:
+      - meteor-mongo-data:/data/db
+
+  redis:
+    image: redis:6.0.9-alpine
+    networks:
+      - meteor-network
+
+volumes:
   meteor-sql-data:
     driver: local
   meteor-mongo-data:

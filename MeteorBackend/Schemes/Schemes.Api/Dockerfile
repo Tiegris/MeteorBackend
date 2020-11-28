@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["Schemes/Schemes.csproj", "Schemes/"]
-RUN dotnet restore "Schemes/Schemes.csproj"
+COPY ["Schemes/Schemes.Api/Schemes.Api.csproj", "Schemes/Schemes.Api/"]
+RUN dotnet restore "Schemes/Schemes.Api/Schemes.Api.csproj"
 COPY . .
-WORKDIR "/src/Schemes"
-RUN dotnet build "Schemes.csproj" -c Release -o /app/build
+WORKDIR "/src/Schemes/Schemes.Api"
+RUN dotnet build "Schemes.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Schemes.csproj" -c Release -o /app/publish
+RUN dotnet publish "Schemes.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Schemes.dll"]
+ENTRYPOINT ["dotnet", "Schemes.Api.dll"]
