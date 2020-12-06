@@ -41,7 +41,7 @@ namespace Schemes.Dal
             return Converters.ParseScheme(reader);           
         }
 
-        public async Task<List<SchemeResult>> GetLatest(int limit = 6) {
+        public async Task<List<SchemeResult>> GetLatest(int limit) {
             using var conn = new MySqlConnection(CONN_STRING);
             using var command = new MySqlCommand(
                 "SELECT * FROM schemes ORDER BY dt DESC, version DESC LIMIT @limit", conn);

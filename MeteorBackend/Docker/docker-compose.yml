@@ -4,25 +4,75 @@ services:
   apigateway:
     image: traefik:v2.2.1
     ports:
-      - "5080:80" # Port of the API Gateway, which will be the port behind which the system will be published
-      - "5088:8080" # Dashboard of Traefik for troubleshooting
+      - 443:443
+      - 80:80
     command:
-      - "--api.insecure=true"
-      - "--api.dashboard=true"
       - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=true"
+      - "--providers.docker.exposedbydefault=false"
+      # entrypoints
+      - --entrypoints.insecure.address=:80
+      - --entrypoints.websecure.address=:443
+      # for HTTPS
+      - --certificatesresolvers.le.acme.email=alma@gmail.com
+      - --certificatesresolvers.le.acme.storage=/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      # HTTPS redirect
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      
+      # global redirect to https
+      - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.redirs.entrypoints=insecure"
+      - "traefik.http.routers.redirs.middlewares=redirect-to-https"
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      #- "https-data:/acme.json"
     networks:
       - meteor-network
 
   schemes:
-    image: ${DOCKER_REGISTRY-}schemes
+    image: ${DOCKER_REGISTRY-}schemes${IMAGE_TAG:-latest}
     build:
       context: ..
       dockerfile: Schemes/Schemes.Api/Dockerfile
     networks:
       - meteor-network
+    depends_on:
+      - mysql
+      - redis
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.schemes.rule=PathPrefix(`/api/schemes`)
+      - traefik.http.routers.schemes.tls.certresolver=le
+      - traefik.http.routers.schemes.entrypoints=websecure
+
+  upload:
+    image: ${DOCKER_REGISTRY-}upload${IMAGE_TAG:-latest}
+    build:
+      context: ..
+      dockerfile: Upload/Docker/Dockerfile
+    networks:
+      - meteor-network
+    depends_on:
+      - mongodb
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.upload.rule=PathPrefix(`/api/upload`)
+      - traefik.http.routers.upload.tls.certresolver=le
+      - traefik.http.routers.upload.entrypoints=websecure
+
+  web:
+    image: "${REGISTRY_URL:-}web:${IMAGE_TAG:-latest}"
+    build:
+      context: ..
+      dockerfile: Web/Docker/Dockerfile
+    networks:
+      - meteor-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.web.rule=PathPrefix(`/`)
+      - traefik.http.routers.web.tls.certresolver=le
+      - traefik.http.routers.web.entrypoints=websecure
 
   mysql:
     image: mysql:8.0.22
@@ -50,6 +100,8 @@ volumes:
   meteor-sql-data:
     driver: local
   meteor-mongo-data:
+    driver: local
+  https-data:
     driver: local
 
 networks:

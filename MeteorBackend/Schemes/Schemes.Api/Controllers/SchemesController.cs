@@ -28,13 +28,13 @@ namespace Schemes.Controllers
             if (limit > Constants.MaxLimit)
                 return StatusCode(400, $"Limit can not be grater than {Constants.MaxLimit}.");
             if (limit < 1)
-                return StatusCode(400, $"Limit must be pozitive.");
+                return StatusCode(400, $"Limit must be positive.");
 
             var cachedValue = await cache.TryGetLatestList(limit);
             if (cachedValue != null) {
                 return cachedValue;
             } else {
-                var result = await repository.GetLatest();
+                var result = await repository.GetLatest(limit);
                 if (result != null) {
                     await cache.SetLatestList(result);
                     return result;

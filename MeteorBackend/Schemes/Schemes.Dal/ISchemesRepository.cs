@@ -8,7 +8,7 @@ namespace Schemes.Dal
     public interface ISchemesRepository
     {
         Task<SchemeResult> Insert(UpdateSchemeRequest scheme);
-        Task<List<SchemeResult>> GetLatest(int limit = 6);
+        Task<List<SchemeResult>> GetLatest(int limit);
         Task<bool> DeleteSingle(int id);
         Task<SchemeResult> Update(int id, UpdateSchemeRequest scheme);
         Task DeleteAll();
