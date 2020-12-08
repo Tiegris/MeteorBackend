@@ -7,23 +7,23 @@ services:
       - 443:443
       - 80:80
     command:
+      # default
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       # entrypoints
-      - --entrypoints.insecure.address=:80
-      - --entrypoints.websecure.address=:443
+      - "--entrypoints.insecure.address=:80"
+      - "--entrypoints.websecure.address=:443"
       # for HTTPS
-      - --certificatesresolvers.le.acme.email=alma@gmail.com
-      - --certificatesresolvers.le.acme.storage=/acme.json
-      - --certificatesresolvers.le.acme.tlschallenge=true
+      - "--certificatesresolvers.le.acme.email=alma@gmail.com"
+      - "--certificatesresolvers.le.acme.storage=/acme.json"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+    labels:
       # HTTPS redirect
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"      
       # global redirect to https
       - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
       - "traefik.http.routers.redirs.entrypoints=insecure"
-      - "traefik.http.routers.redirs.middlewares=redirect-to-https"
-
+      - "traefik.http.routers.redirs.middlewares=redirect-to-https"  
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       #- "https-data:/acme.json"
