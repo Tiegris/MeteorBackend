@@ -10,23 +10,16 @@ services:
       # only in debug
       - "--api.insecure=true"
       - "--api.dashboard=true"
-      # default
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      # entrypoints
-      - "--entrypoints.insecure.address=:80"
-      - "--entrypoints.websecure.address=:443"
 
   schemes:
     image: schemes:dev
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80 #; https://+:443
+      - ASPNETCORE_URLS=http://+:80 
     ports:
       - 5082:80
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.schemes.rule=PathPrefix(`/api/schemes`)
 
   upload:
     image: upload:dev
