@@ -24,7 +24,7 @@
   <!-- If the timestamp of the input files (above) is newer than the timestamp of the dummy output file, MSBuild will trigger the build -->
   <Target Name="BuildPython" Inputs="@(PyInputs)" Outputs="@(PyOutputs)" BeforeTargets="Build">
     <!-- Build the container as described in the dockerfile -->
-    <Exec WorkingDirectory="$(SolutionDir)" Command="docker build -t upload:dev -f Upload/Docker/Dockerfile ." />
+    <Exec WorkingDirectory="$(SolutionDir)" Command="docker build -t auth:dev -f Auth/Docker/Dockerfile ." />
     <!-- Touch the dummy output file. Its timestamp will be the time of build. -->
     <Touch Files="@(PyOutputs)" AlwaysCreate="true" />
   </Target>

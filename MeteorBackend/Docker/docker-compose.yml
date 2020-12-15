@@ -32,6 +32,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.schemes.rule=PathPrefix(`/api/schemes`)
+      - "traefik.http.middlewares.auth.forwardauth.address=http://auth/api/auth" 
+      - "traefik.http.routers.schemes.middlewares=auth@docker"
 
   upload:
     image: "upload:latest"
@@ -45,6 +47,19 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.upload.rule=PathPrefix(`/api/upload`)
+      - "traefik.http.middlewares.auth.forwardauth.address=http://auth/api/auth" 
+      - "traefik.http.routers.upload.middlewares=auth@docker"
+
+  auth:
+    image: "auth:latest"
+    build:
+      context: ..
+      dockerfile: Auth/Docker/Dockerfile
+    networks:
+      - meteor-network
+    labels:
+      - "traefik.http.routers.auth.rule=PathPrefix(`/api/auth`)"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://users/api/auth"
 
   web:
     image: "web:latest"
