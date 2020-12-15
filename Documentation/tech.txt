@@ -1,0 +1,11 @@
+.NET 5.0
+ASP.NET Core 5.0
+Docker
+Docker compose
+Python
+Flask
+Reddis
+MongoDB
+html, css, javascript, bootstrap, jQuery
+traefik
+Fiddler
