@@ -16,17 +16,6 @@ services:
       # entrypoints
       - "--entrypoints.insecure.address=:80"
       - "--entrypoints.websecure.address=:443"
-      # for HTTPS
-      - "--certificatesresolvers.le.acme.email=alma@gmail.com"
-      - "--certificatesresolvers.le.acme.storage=/acme.json"
-      - "--certificatesresolvers.le.acme.tlschallenge=true"
-    labels:
-      # HTTPS redirect
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"      
-      # global redirect to https
-      - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.redirs.entrypoints=insecure"
-      - "traefik.http.routers.redirs.middlewares=redirect-to-https" 
 
   schemes:
     image: schemes:dev
@@ -35,6 +24,9 @@ services:
       - ASPNETCORE_URLS=http://+:80 #; https://+:443
     ports:
       - 5082:80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.schemes.rule=PathPrefix(`/api/schemes`)
 
   upload:
     image: upload:dev
