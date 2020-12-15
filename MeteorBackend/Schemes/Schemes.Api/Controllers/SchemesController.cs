@@ -70,7 +70,8 @@ namespace Schemes.Controllers
             if (result == null)
                 return StatusCode(400);
             else {
-                await cache.ShiftLists(result); //sort of write through cache
+                //await cache.ShiftLists(result); //sort of write through cache
+                await cache.InvalidateLists();
                 return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
             }
         }
