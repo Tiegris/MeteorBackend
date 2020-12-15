@@ -20,7 +20,7 @@ services:
       - meteor-network
 
   schemes:
-    image: ${DOCKER_REGISTRY-}schemes${IMAGE_TAG:-latest}
+    image: "schemes:latest"
     build:
       context: ..
       dockerfile: Schemes/Schemes.Api/Dockerfile
@@ -34,7 +34,7 @@ services:
       - traefik.http.routers.schemes.rule=PathPrefix(`/api/schemes`)
 
   upload:
-    image: ${DOCKER_REGISTRY-}upload${IMAGE_TAG:-latest}
+    image: "upload:latest"
     build:
       context: ..
       dockerfile: Upload/Docker/Dockerfile
@@ -47,7 +47,7 @@ services:
       - traefik.http.routers.upload.rule=PathPrefix(`/api/upload`)
 
   web:
-    image: "${REGISTRY_URL:-}web:${IMAGE_TAG:-latest}"
+    image: "web:latest"
     build:
       context: ..
       dockerfile: Web/Docker/Dockerfile
