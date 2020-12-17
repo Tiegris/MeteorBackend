@@ -1,11 +1,10 @@
-.NET 5.0
-ASP.NET Core 5.0
-Docker
-Docker compose
-Python
-Flask
+.NET 5.0, ASP.NET Core 5.0, C#
+Docker, Docker compose
+Python, Flask
 Reddis
 MongoDB
-html, css, javascript, bootstrap, jQuery
+MySQL
+Nginx, html, css, javascript, bootstrap, jQuery
 traefik
-Fiddler
+Fejlesztés, debugolás:
+Fiddler, Visual Studio 19, Visual Studio Code, PyCharm
